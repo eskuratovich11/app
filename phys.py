@@ -1,11 +1,11 @@
 scale = 149 * 10 ** 7 # масштаб в 1 пк
 scale_m = 10**24
-scale_q = 10**(-6)
+scale_q = 10**18
 stena_x1= 0*scale
 stena_x2= 1000*scale
 stena_y1 = 200*scale
 stena_y2 = 2200*scale
-#dt = 30000
+
 dt = 30000
 ms = 1.5
 
@@ -28,7 +28,7 @@ class Solver:
                        a.x*scale - b.x*scale) /
                ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
         ax += (k *
-               a.electric_charge*scale_q * b.electric_charge*scale_q / a.mas*scale_m * (
+               a.electric_charge*scale_q * b.electric_charge*scale_q / (a.mas*scale_m) * (
                        a.x * scale - b.x*scale) /
                ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
         return float(ax)
@@ -42,7 +42,7 @@ class Solver:
                        a.y*scale - b.y*scale) /
                ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
         ay += (k *
-               a.electric_charge*scale_q * b.electric_charge*scale_q / a.mas*scale_m * (
+               a.electric_charge*scale_q * b.electric_charge*scale_q / (a.mas*scale_m) * (
                        a.y*scale - b.y*scale) /
                ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
         return float(ay)

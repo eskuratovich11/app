@@ -27,6 +27,7 @@ class CustomLayout(BoxLayout):
 
     def clear(self):
         self.clear_widgets()
+        del Object.items
         Object.items = []
 
 
@@ -46,16 +47,17 @@ class SecondScreen(ModalView):
         super().__init__(**kw)
         self.child_screen = child_screen
         self.size_point = 0
+        self.num = 0
         self.pointsize = [50, 50]
-    def check_num(self):
+    '''    def check_num(self):
         if Object.items == []:
             self.num = 0
         else:
-            self.num += 1
+            self.num += 1'''
     def create_object(self, x, y, vx, vy, mas, electric_charge):
-        self.check_num()
-
-        self.object = Move()
+        #self.check_num()
+        self.num = len(Object.items)
+        self.object = Move(self.num)
 
         self.object.create(x=float(x) + 100, y=float(y) + 200, size=self.pointsize,
                            vx=float(vx), vy=float(vy),
@@ -79,9 +81,9 @@ class SecondScreen(ModalView):
 
     def clock(self):
         my_clock = Clock
-        event1 = my_clock.schedule_once(self.object.update(self.num), 0)
+        event1 = my_clock.schedule_once(self.object.update, 0)
         event1()
-        event = my_clock.schedule_interval(self.object.update(self.num), 0.1)
+        event = my_clock.schedule_interval(self.object.update, 0.1)
         event()
 
 
@@ -158,15 +160,15 @@ class Object(Widget):
 
 
 class Move(Widget):
-    def __init__(self, **kw):
+    def __init__(self, num, **kw):
         super().__init__(**kw)
+        self.num = num
 
-
-    def update(self, dt, num):
+    def update(self, dt):
         if Object.items == []:
             pass
         else:
-            self.object.move(dt, num)
+            self.object.move(dt, self.num)
 
     def create(self, x, y, size, vx, vy, mas, electric_charge):
         self.object = Object(x=x, y=y, size=size, vx=vx, vy=vy, mas=mas, electric_charge=electric_charge)
