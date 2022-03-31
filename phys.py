@@ -3,7 +3,7 @@ scale_m = 10**24
 scale_q = 10**18
 stena_x1= 0*scale
 stena_x2= 1000*scale
-stena_y1 = 200*scale
+stena_y1 = 100*scale
 stena_y2 = 2200*scale
 
 dt = 30000
@@ -65,25 +65,25 @@ class Solver:
                 a.vx = -a.vx/ms
             else:
                 a.vx = a.vx/ms
-            a.x = stena_x1 /scale + 2* a.size[0]
+            a.x = stena_x1 /scale + 5
         elif a.x*scale > stena_x2:
             if a.vx >= 0:
                 a.vx = -a.vx/ms
             else:
                 a.vx = a.vx/ms
-            a.x = stena_x2/scale - 2* a.size[0]
+            a.x = stena_x2/scale -  5
         elif a.y*scale < stena_y1:
             if a.vy <= 0:
                 a.vy = -a.vy/ms
             else:
                 a.vy = a.vy/ms
-            a.y = stena_y1/scale + 2* a.size[0]
+            a.y = stena_y1/scale + 5
         elif a.y*scale > stena_y2:
             if a.vy >= 0:
                 a.vy = -a.vy/ms
             else:
                 a.vy = a.vy/ms
-            a.y = stena_y2/scale- 2* a.size[0]
+            a.y = stena_y2/scale - 5
         else:
             a.vx = a.vx
             a.vy = a.vy

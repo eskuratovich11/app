@@ -58,7 +58,7 @@ class SecondScreen(ModalView):
         self.num = len(Object.items)
         self.object = Move(self.num)
 
-        self.object.create(x=float(x) + 100, y=float(y) + 200, size=self.pointsize,
+        self.object.create(x=float(x) + 100, y=float(y) + 100, size=self.pointsize,
                            vx=float(vx), vy=float(vy),
                            mas=float(mas), electric_charge=float(electric_charge))
 
