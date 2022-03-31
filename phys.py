@@ -65,25 +65,25 @@ class Solver:
                 a.vx = -a.vx/ms
             else:
                 a.vx = a.vx/ms
-            a.x = stena_x1 /scale
+            a.x = stena_x1 /scale + 2* a.size[0]
         elif a.x*scale > stena_x2:
             if a.vx >= 0:
                 a.vx = -a.vx/ms
             else:
                 a.vx = a.vx/ms
-            a.x = stena_x2/scale
+            a.x = stena_x2/scale - 2* a.size[0]
         elif a.y*scale < stena_y1:
             if a.vy <= 0:
                 a.vy = -a.vy/ms
             else:
                 a.vy = a.vy/ms
-            a.y = stena_y1/scale
+            a.y = stena_y1/scale + 2* a.size[0]
         elif a.y*scale > stena_y2:
             if a.vy >= 0:
                 a.vy = -a.vy/ms
             else:
                 a.vy = a.vy/ms
-            a.y = stena_y2/scale
+            a.y = stena_y2/scale- 2* a.size[0]
         else:
             a.vx = a.vx
             a.vy = a.vy

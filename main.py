@@ -27,7 +27,6 @@ class CustomLayout(BoxLayout):
 
     def clear(self):
         self.clear_widgets()
-        del Object.items
         Object.items = []
 
 
