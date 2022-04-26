@@ -1,0 +1,31 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+<FirstScreen>:
+    md_bg_color: app.theme_cls.bg_light
+    MDFillRoundFlatButton:
+        id:start
+        text: "start"
+        pos_hint: {"center_x": 0.5, "center_y": 0.75}
+        font_name: "Georgia"
+
+        md_bg_color: app.theme_cls.primary_light
+
+    MDFillRoundFlatButton:
+        id: set1
+        text: "settings"
+        font_name: "Georgia"
+        pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+
+    MDFillRoundFlatButton:
+        id: task
+        text: "tasks"
+        font_name: "Georgia"
+        pos_hint: {"center_x": 0.5, "center_y": 0.45}
+
+    MDFillRoundFlatIconButton:
+        id: exit
+        icon: "exit-to-app"
+        font_name: "Georgia"
+        md_bg_color: app.theme_cls.primary_dark
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+        on_release: app.stop()
