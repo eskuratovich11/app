@@ -27,8 +27,7 @@ class CustomLayout(BoxLayout):
 
     def clear(self):
         self.clear_widgets()
-        Object.items.clear()
-
+        Object.num_new = Object.num +1
 
 class MainScreen(MDScreen):
     def __init__(self, **kw):
@@ -45,22 +44,32 @@ class SecondScreen(ModalView):
     def __init__(self, child_screen, **kw):
         super().__init__(**kw)
         self.child_screen = child_screen
-        self.num = -1
         self.size_point = 0
         self.pointsize = [50, 50]
+    def create_object(self, x, y, vx, vy, mas, electric_charge, x_error, y_error, vx_error, vy_error, m_error, q_error):
+        if x_error == True:
+            pass
+        elif y_error == True:
+            pass
+        elif vx_error == True:
+            pass
+        elif vy_error == True:
+            pass
+        elif m_error == True:
+            pass
+        elif q_error== True:
+            pass
+        else:
+            Object.num += 1
+            self.object = Move(Object.num)
+            print(Object.num)
+            self.object.create(x=float(x) + 100, y=float(y) + 100, size=self.pointsize,
+                               vx=float(vx), vy=float(vy),
+                               mas=float(mas), electric_charge=float(electric_charge))
 
-    def create_object(self, x, y, vx, vy, mas, electric_charge):
-        if Object.items == []:
-            self.num = -1
-        self.num += 1
-        self.object = Move(self.num)
-        self.object.create(x=float(x) + 100, y=float(y) + 200, size=self.pointsize,
-                           vx=float(vx), vy=float(vy),
-                           mas=float(mas), electric_charge=float(electric_charge))
+            self.child_screen.add_widget(self.object)
 
-        self.child_screen.add_widget(self.object)
-
-        self.clock()
+            self.clock()
 
     def m_p(self, size, n):
         if n == 1 and self.size_point != 10:
@@ -76,14 +85,30 @@ class SecondScreen(ModalView):
 
     def clock(self):
         my_clock = Clock
-        event1 = my_clock.schedule_once(self.object.update, 0)
-        event1()
-        event = my_clock.schedule_interval(self.object.update, 0.1)
-        event()
+        my_clock.schedule_once(self.object.update, 0)
+        my_clock.schedule_interval(self.object.update, 0.1)
+
+    def set_error_message(self, text_field):
+        try:
+            float(text_field.text)
+            text_field.error = False
+        except ValueError:
+            text_field.error = True
+    def set_error_message_m(self, m):
+        try:
+            float(m.text)
+            m.error = False
+            if float(m.text) <= 0:
+                m.error = True
+        except ValueError:
+            m.error = True
+
 
 
 class Object(Widget):
     items = []
+    num = -1
+    num_new = 0
 
     def __init__(self, x, y, size, vx, vy, mas, electric_charge, **kw):
         super(Object, self).__init__(**kw)
@@ -111,7 +136,8 @@ class Object(Widget):
         self.canvas.add(self.line)
 
     def move(self, dt, num):
-        self.interact = phys.Solver(num, Object.items)
+        num = num-Object.num_new
+        self.interact = phys.Solver( num, Object.items[Object.num_new : Object.num +1 ])
         self.coords = ((self.interact.output_coords_func()[0], self.interact.output_coords_func()[1]))
         self.pos = Vector(self.coords)
         self.ellipse.pos = self.pos
@@ -160,15 +186,17 @@ class Move(Widget):
         self.num = num
 
     def update(self, dt):
-        if Object.items == []:
+        if self.num < Object.num_new :
             pass
         else:
-            self.object.move(dt, self.num)
+            self.point.move(dt, self.num)
 
     def create(self, x, y, size, vx, vy, mas, electric_charge):
-        self.object = Object(x=x, y=y, size=size, vx=vx, vy=vy, mas=mas, electric_charge=electric_charge)
-        self.object.draw()
-        self.add_widget(self.object)
+        self.point = Object(x=x, y=y, size=size, vx=vx, vy=vy, mas=mas, electric_charge=electric_charge)
+
+        self.point.draw()
+        self.add_widget(self.point)
+
 
 
 class SettingScreen(MDScreen):

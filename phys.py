@@ -6,7 +6,7 @@ stena_x2= 1000*scale
 stena_y1 = 100*scale
 stena_y2 = 2200*scale
 
-dt = 30000
+dt = 50000
 ms = 1.5
 
 G = 6.67 * 10 ** (-11)
@@ -22,29 +22,34 @@ class Solver:
     def get_dvx_dt(self, a, b):
 
         ax = 0.0
+        try:
+            ax += (-G *
+                   b.mas * scale_m * (
+                           a.x * scale - b.x * scale) /
+                   ((a.x * scale - b.x * scale) ** 2 + (a.y * scale - b.y * scale) ** 2) ** 1.5)
+            ax += (k *
+                   a.electric_charge * scale_q * b.electric_charge * scale_q / (a.mas * scale_m) * (
+                           a.x * scale - b.x * scale) /
+                   ((a.x * scale - b.x * scale) ** 2 + (a.y * scale - b.y * scale) ** 2) ** 1.5)
+        except ZeroDivisionError:
+            ax = 0
 
-        ax += (-G *
-               b.mas*scale_m * (
-                       a.x*scale - b.x*scale) /
-               ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
-        ax += (k *
-               a.electric_charge*scale_q * b.electric_charge*scale_q / (a.mas*scale_m) * (
-                       a.x * scale - b.x*scale) /
-               ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
         return float(ax)
 
     def get_dvy_dt(self, a, b):
 
         ay = 0.0
-
-        ay += (-G *
-               b.mas*scale_m * (
-                       a.y*scale - b.y*scale) /
-               ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
-        ay += (k *
-               a.electric_charge*scale_q * b.electric_charge*scale_q / (a.mas*scale_m) * (
-                       a.y*scale - b.y*scale) /
-               ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
+        try:
+            ay += (-G *
+                   b.mas*scale_m * (
+                           a.y*scale - b.y*scale) /
+                   ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
+            ay += (k *
+                   a.electric_charge*scale_q * b.electric_charge*scale_q / (a.mas*scale_m) * (
+                           a.y*scale - b.y*scale) /
+                   ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
+        except ZeroDivisionError:
+            ay = 0
         return float(ay)
 
     def ydar(self, a, b):
