@@ -202,12 +202,13 @@ class Move(Widget):
 
 class SettingScreen(MDScreen):
 
-    def change(self, change, tool, start, set1, create, clearb, back_main, back_set, toolbar, task1_1, task2_1, task3_1 , task4_1, task5_1, task1, task2, task3, task4, task5, scale, x_y, vx_vy, m_s, q_s, back_tasks, lang ):
+    def change(self, change, tool, start, set1, task, create, clearb, back_main, back_set, toolbar, task1_1, task2_1, task3_1 , task4_1, task5_1, task1, task2, task3, task4, task5, scale, x_y, vx_vy, m_s, q_s, back_tasks, lang ):
         if lang == 1:
             change.text = 'Изменить язык'
             tool.title = 'Настройки'
             start.text = 'начать'
             set1.text = 'настройки'
+            task.text = 'задачи'
             create.text = 'создать'
             clearb.text = 'очистить'
             back_main.text = 'назад'
@@ -221,7 +222,7 @@ class SettingScreen(MDScreen):
             task1.text = 'Разместите 2 разноименно заряженных тела на экране. Добавьте 3 тело так, чтобы избежать столкновения 1 и 2.'
             task2.text = 'Создайте систему из массивного тела и 3 объектов, обращающихся вокруг него.'
             task3.text = 'Создайте 2 объекта так, чтобы тело 2 вращалось вокруг тела 1, при этом одно из тел должно двигаться по оси х, другок по оси у. Далее добавьте 3 неподвижный объект, который притянет оба.'
-            task4.text = 'Расположите на одной диагонали 2 разноименных заряда. Сделайте так, чтобы они не притянулись друг у другу, добавив два дополнительных объекта.'
+            task4.text = 'Расположите на одной диагонали 2 разноименных заряда. Сделайте так, чтобы они не притянулись друг к другу, добавив два дополнительных объекта.'
             task5.text = 'Расположите в нижней части экрана 3 тела с небольшой массой. В верхней части расположите тело с большей массой. Скорости тел равны 0. Не перемещая объекты, заставьте три первых объекта притянуться к большему.'
             scale.text = 'Масштаб'
             x_y.text = 'x, y : 100 = 1 а. е (149*10^9 м)'
@@ -234,6 +235,7 @@ class SettingScreen(MDScreen):
             tool.title = 'settings'
             start.text = 'start'
             set1.text = 'settings'
+            task.text = 'tasks'
             create.text = 'create'
             clearb.text = 'clear'
             back_main.text = 'back'

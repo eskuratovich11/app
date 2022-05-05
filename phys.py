@@ -6,7 +6,7 @@ stena_x2= 1000*scale
 stena_y1 = 100*scale
 stena_y2 = 2200*scale
 
-dt = 50000
+dt = 30000
 ms = 1.5
 
 G = 6.67 * 10 ** (-11)
@@ -18,45 +18,46 @@ class Solver:
         self.objects = particles
         self.num = num
         self.N = int(len(self.objects))
-
+        self.ax = 0
+        self.ay = 0
     def get_dvx_dt(self, a, b):
 
-        ax = 0.0
+
         try:
-            ax += (-G *
+            self.ax += (-G *
                    b.mas * scale_m * (
                            a.x * scale - b.x * scale) /
                    ((a.x * scale - b.x * scale) ** 2 + (a.y * scale - b.y * scale) ** 2) ** 1.5)
-            ax += (k *
+            self.ax += (k *
                    a.electric_charge * scale_q * b.electric_charge * scale_q / (a.mas * scale_m) * (
                            a.x * scale - b.x * scale) /
                    ((a.x * scale - b.x * scale) ** 2 + (a.y * scale - b.y * scale) ** 2) ** 1.5)
         except ZeroDivisionError:
-            ax = 0
+            self.ax = 0
 
-        return float(ax)
+        return float(self.ax)
 
     def get_dvy_dt(self, a, b):
 
-        ay = 0.0
+
         try:
-            ay += (-G *
+            self.ay += (-G *
                    b.mas*scale_m * (
                            a.y*scale - b.y*scale) /
                    ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
-            ay += (k *
+            self.ay += (k *
                    a.electric_charge*scale_q * b.electric_charge*scale_q / (a.mas*scale_m) * (
                            a.y*scale - b.y*scale) /
                    ((a.x*scale - b.x*scale) ** 2 + (a.y*scale - b.y*scale) ** 2) ** 1.5)
         except ZeroDivisionError:
-            ay = 0
-        return float(ay)
+            self.ay = 0
+        return float(self.ay)
 
     def ydar(self, a, b):
         r = (a.x - b.x) ** 2 + (a.y - b.y) ** 2
-        if r <= (self.objects[self.num].size[0]) ** 2:
-            a.vx = (2 * b.mas*scale_m * b.vx + a.vx * (a.mas*scale_m - b.mas*scale_m )) / (a.mas*scale_m + b.mas*scale_m)/ ms
-            a.vy = (2 * b.mas*scale_m * b.vy + a.vy * (a.mas*scale_m - b.mas*scale_m )) / (a.mas*scale_m + b.mas*scale_m)/ ms
+        if r <= (a.size[0]) ** 2:
+            a.vx = ((2 * b.mas*scale_m * b.vx + a.vx * (a.mas*scale_m - b.mas*scale_m )) / (a.mas*scale_m + b.mas*scale_m))/ ms
+            a.vy = ((2 * b.mas*scale_m * b.vy + a.vy * (a.mas*scale_m - b.mas*scale_m )) / (a.mas*scale_m + b.mas*scale_m))/ ms
 
         else:
             a.vx = a.vx
@@ -76,7 +77,7 @@ class Solver:
                 a.vx = -a.vx/ms
             else:
                 a.vx = a.vx/ms
-            a.x = stena_x2/scale -  5
+            a.x = stena_x2/scale - 5
         elif a.y*scale < stena_y1:
             if a.vy <= 0:
                 a.vy = -a.vy/ms
