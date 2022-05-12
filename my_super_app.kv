@@ -41,7 +41,6 @@
                     id: scale
                     text: 'Scale'
                     pos_hint: {"center_x": 0.5, "center_y": 0.7}
-                    font_size: 20
                 MDLabel:
                     id: x_y
                     text: 'x, y : 100 = 1 a. u (149*10^9 m)'
@@ -69,7 +68,6 @@
                     id: task1_1
                     text: 'Task 1'
                     pos_hint: {"center_x": 0.5, "center_y": 0.7}
-                    font_size: 20
 
                 MDLabel:
                     id: task1
@@ -83,7 +81,6 @@
                     id: task2_1
                     text: 'Task 2'
                     pos_hint: {"center_x": 0.5, "center_y": 0.7}
-                    font_size: 20
 
                 MDLabel:
                     id: task2
@@ -97,7 +94,6 @@
                     id: task3_1
                     text: 'Task 3'
                     pos_hint: {"center_x": 0.5, "center_y": 0.7}
-                    font_size: 20
 
                 MDLabel:
                     id: task3
@@ -111,7 +107,6 @@
                     id: task4_1
                     text: 'Task 4'
                     pos_hint: {"center_x": 0.5, "center_y": 0.7}
-                    font_size: 20
                 MDLabel:
                     id: task4
                     text: 'Place 2 opposite charges on the same diagonal. They must not pulled each other. You can add two extra objects.'
@@ -156,16 +151,13 @@
         icon: "arrow-left-bold-circle"
         text: "back"
         md_bg_color: app.theme_cls.primary_dark
-        icon_size: "64sp"
+
         pos_hint: {"center_x": 0.85, "center_y": 0.05}
         on_release: root.manager.current= 'first'
 
 <CustomLayout> :
     id: custom
     size_hint: None, None
-    size: 1000, 1900
-    pos: 0,1900
-
 <SecondScreen>:
     MDBoxLayout:
         orientation: 'vertical'
@@ -229,8 +221,6 @@
             adaptive_size: True
             MDIconButton:
                 icon: "minus"
-                size_hint: None, None
-                size: 200, 200
                 pos_hint: {"center_x": 0.1, "center_y": 0.5}
                 on_release: root.m_p(size, 1)
             MDTextButton:
@@ -240,16 +230,12 @@
 
             MDIconButton:
                 icon: "plus"
-                size_hint: None, None
-                size: 200, 200
                 pos_hint: {"center_x": 0.7, "center_y": 0.5}
                 on_release: root.m_p(size, 0)
         MDBoxLayout:
             adaptive_size: True
             MDIconButton:
                 icon: "check-outline"
-                size_hint: None, None
-                size: 200, 200
                 pos_hint: {"center_x": 0.4, "center_y": 0.5}
                 on_release:
                     root.create_object(x.text, y.text, vx.text, vy.text, m.text, q.text,
@@ -257,8 +243,6 @@
                     root.dismiss()
             MDIconButton:
                 icon: "arrow-left-bold"
-                size_hint: None, None
-                size: 200, 200
                 pos_hint: {"center_x": 0.6, "center_y": 0.5}
                 on_release: root.dismiss()
 
@@ -270,9 +254,7 @@
             id: tool
             title: "Settings"
         MDRelativeLayout:
-
             orientation: 'vertical'
-
 
             MDFillRoundFlatButton:
                 id:change
@@ -284,8 +266,6 @@
                 MDIconButton:
                     id: purple
                     icon: "circle"
-                    size_hint: None, None
-                    size: 200, 200
                     md_bg_color: get_color_from_hex('9C27B0')
                     pos_hint: {"center_x": 0.3, "center_y": 0.5}
                     on_release:
@@ -301,8 +281,6 @@
                 MDIconButton:
                     id: red
                     icon: "circle"
-                    size_hint: None, None
-                    size: 200, 200
                     md_bg_color: get_color_from_hex('D32F2F')
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
                     on_release:
@@ -317,8 +295,6 @@
                 MDIconButton:
                     id: green
                     icon: "circle"
-                    size_hint: None, None
-                    size: 200, 200
                     md_bg_color: get_color_from_hex('388E3C')
                     pos_hint: {"center_x": 0.7, "center_y": 0.5}
                     on_release:
@@ -333,22 +309,16 @@
             MDFillRoundFlatIconButton:
                 id: back_set
                 icon: "arrow-left-bold-circle"
-                size_hint: None, None
-                size: 300, 200
                 text: "back"
                 md_bg_color: app.theme_cls.primary_dark
-                icon_size: "64sp"
                 pos_hint: {"center_x": 0.5, "center_y": 0.3}
                 on_release: root.manager.current= 'first'
 
     DropDown:
         id:dropdown
         dropdown : self.dismiss()
-
         MDTextButton:
             text: 'rus'
-            size_hint:  None, None
-            size:  100, 30
             on_release:
                 root.change(
                 root.manager.get_screen('settings').ids.change,
@@ -381,8 +351,6 @@
 
         MDTextButton:
             text: 'eng'
-            size_hint:  None, None
-            size:  100, 30
 
             on_release:
                 root.change(
@@ -415,10 +383,5 @@
                 root.manager.get_screen('tasks').ids.back_tasks,
                 0 )
 <Object>
-    size_hint: None, None
-    size: self.size
-    pos: 0,100
+
 <Move>
-    size_hint: None, None
-    size: 1000, 1900
-    pos: 0,100

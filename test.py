@@ -1,4 +1,4 @@
-import phys as phys
+import phys2 as phys2
 from random import random
 from kivymd.app import MDApp
 from kivy.uix.widget import Widget
@@ -13,10 +13,12 @@ from kivy.clock import Clock
 from kivy.vector import Vector
 
 
-Builder.load_file('my_super_app.kv')
+Builder.load_file('n.kv')
 
 
 class FirstScreen(MDScreen):
+    pass
+class Tasks (MDScreen):
     pass
 
 
@@ -27,7 +29,7 @@ class CustomLayout(BoxLayout):
 
     def clear(self):
         self.clear_widgets()
-        Object.num_new = Object.num +1
+        Object.num_new = Object.num + 1
 
 class MainScreen(MDScreen):
     def __init__(self, **kw):
@@ -62,7 +64,6 @@ class SecondScreen(ModalView):
         else:
             Object.num += 1
             self.object = Move(Object.num)
-            print(Object.num)
             self.object.create(x=float(x) + 100, y=float(y) + 100, size=self.pointsize,
                                vx=float(vx), vy=float(vy),
                                mas=float(mas), electric_charge=float(electric_charge))
@@ -137,7 +138,7 @@ class Object(Widget):
 
     def move(self, dt, num):
         num = num-Object.num_new
-        self.interact = phys.Solver( num, Object.items[Object.num_new : Object.num +1 ])
+        self.interact = phys2.Solver( num, Object.items[Object.num_new : Object.num +1 ])
         self.coords = ((self.interact.output_coords_func()[0], self.interact.output_coords_func()[1]))
         self.pos = Vector(self.coords)
         self.ellipse.pos = self.pos
@@ -201,25 +202,61 @@ class Move(Widget):
 
 class SettingScreen(MDScreen):
 
-    def change(self, change, tool, start, set1, create, clearb, back_main, back_set, lang ):
+    def change(self, change, tool, start, set1, task, create, clearb, back_main, back_set, toolbar, task1_1, task2_1, task3_1 , task4_1, task5_1, task1, task2, task3, task4, task5, scale, x_y, vx_vy, m_s, q_s, back_tasks, lang ):
         if lang == 1:
             change.text = 'Изменить язык'
             tool.title = 'Настройки'
             start.text = 'начать'
             set1.text = 'настройки'
+            task.text = 'задачи'
             create.text = 'создать'
             clearb.text = 'очистить'
             back_main.text = 'назад'
             back_set.text = 'назад'
+            toolbar.title = 'Задачи'
+            task1_1.text = 'Задача 1'
+            task2_1.text = 'Задача 2'
+            task3_1.text = 'Задача 3'
+            task4_1.text = 'Задача 4'
+            task5_1.text = 'Задача 5'
+            task1.text = 'Разместите 2 разноименно заряженных тела на экране. Добавьте 3 тело так, чтобы избежать столкновения 1 и 2.'
+            task2.text = 'Создайте систему из массивного тела и 3 объектов, обращающихся вокруг него.'
+            task3.text = 'Создайте 2 объекта так, чтобы тело 2 вращалось вокруг тела 1, при этом одно из тел должно двигаться по оси х, другок по оси у. Далее добавьте 3 неподвижный объект, который притянет оба.'
+            task4.text = 'Расположите на одной диагонали 2 разноименных заряда. Сделайте так, чтобы они не притянулись друг к другу, добавив два дополнительных объекта.'
+            task5.text = 'Расположите в нижней части экрана 3 тела с небольшой массой. В верхней части расположите тело с большей массой. Скорости тел равны 0. Не перемещая объекты, заставьте три первых объекта притянуться к большему.'
+            scale.text = 'Масштаб'
+            x_y.text = 'x, y : 100 = 1 а. е (149*10^9 м)'
+            vx_vy.text = 'vx, vy : 1 = 1 м/с'
+            m_s.text = 'm: 1 = 10^ 24 кг'
+            q_s.text = 'q: 1= 10^18 Кл'
+            back_tasks.text = 'назад'
         else:
             change.text = 'Change language'
             tool.title = 'settings'
             start.text = 'start'
             set1.text = 'settings'
+            task.text = 'tasks'
             create.text = 'create'
             clearb.text = 'clear'
             back_main.text = 'back'
             back_set.text = 'back'
+            toolbar.title = 'Tasks'
+            task1_1.text = 'Task 1'
+            task2_1.text = 'Task 2'
+            task3_1.text = 'Task 3'
+            task4_1.text = 'Task 4'
+            task5_1.text = 'Task 5'
+            task1.text = 'Place 2 oppositely charged objects on the screen. Add object 3 so as to avoid collision 1 and 2.'
+            task2.text = 'Create a system from a massive object and 3 objects revolving around it.'
+            task3.text = 'Create 2 objects so that body 2 rotates around body 1, with one of the bodies moving along the x-axis and the other moving along the y-axis. Next, add 3 stationary objects that will pull both.'
+            task4.text = 'Place 2 opposite charges on the same diagonal. They must not pulled each other. You can add two extra objects.'
+            task5.text = 'Place 3 bodies with a small mass at the bottom of the screen. In the upper part, place the body with more mass. The velocities of the bodies are 0. Without moving the objects, make the first three objects be pulled to the larger one.'
+            scale.text = 'Scale'
+            x_y.text = 'x, y : 100 = 1 а. u (149*10^9 m)'
+            vx_vy.text = 'vx, vy : 1 = 1 m/s'
+            m_s.text = 'm: 1 = 10^ 24 kg'
+            q_s.text = 'q: 1= 10^18 C'
+            back_tasks.text = 'back'
 
 
 class CustomDropDown(DropDown):
@@ -234,6 +271,7 @@ class TestApp(MDApp):
         sm.add_widget(FirstScreen(name='first'))
         sm.add_widget(SettingScreen(name='settings'))
         sm.add_widget(MainScreen(name='dvizhuha'))
+        sm.add_widget(Tasks(name='tasks'))
 
         return sm
 

@@ -1,8 +1,8 @@
 scale = 149 * 10 ** 7 # масштаб в 1 пк
 scale_m = 10**24
 scale_q = 10**18
-stena_x1= 0*scale
-stena_x2= 1000*scale
+stena_x1 = 0*scale
+stena_x2 = 1000*scale
 stena_y1 = 100*scale
 stena_y2 = 2200*scale
 
