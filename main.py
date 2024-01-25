@@ -12,7 +12,6 @@ from kivy.uix.modalview import ModalView
 from kivy.clock import Clock
 from kivy.vector import Vector
 
-
 Builder.load_file('my_super_app.kv')
 
 
@@ -27,9 +26,11 @@ class CustomLayout(BoxLayout):
         super(CustomLayout, self).__init__(**kwargs)
         self.dispatcher = dispatcher
 
+
     def clear(self):
         self.clear_widgets()
         Object.num_new = Object.num +1
+
 
 class MainScreen(MDScreen):
     def __init__(self, **kw):
