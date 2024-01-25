@@ -1,10 +1,10 @@
 scale = 149 * 10 ** 7 # масштаб в 1 пк
 scale_m = 10**24
 scale_q = 10**18
-stena_x1 = 0*scale
-stena_x2 = 1000*scale
-stena_y1 = 100*scale
-stena_y2 = 2200*scale
+wall_x1 = 0 * scale
+wall_x2 = 1000 * scale
+wall_y1 = 100 * scale
+wall_y2 = 2200 * scale
 
 dt = 30000
 ms = 1.5
@@ -21,8 +21,6 @@ class Solver:
         self.ax = 0
         self.ay = 0
     def get_dvx_dt(self, a, b):
-
-
         try:
             self.ax += (-G *
                    b.mas * scale_m * (
@@ -53,7 +51,7 @@ class Solver:
             self.ay = 0
         return float(self.ay)
 
-    def ydar(self, a, b):
+    def hit(self, a, b):
         r = (a.x - b.x) ** 2 + (a.y - b.y) ** 2
         if r <= (a.size[0]) ** 2:
             a.vx = ((2 * b.mas*scale_m * b.vx + a.vx * (a.mas*scale_m - b.mas*scale_m )) / (a.mas*scale_m + b.mas*scale_m))/ ms
@@ -64,32 +62,32 @@ class Solver:
             b.vy = b.vy
         return a.vx, b.vy
 
-    def stena(self, a):
+    def wall(self, a):
 
-        if a.x*scale < stena_x1:
+        if a.x*scale < wall_x1:
             if a.vx <= 0:
                 a.vx = -a.vx/ms
             else:
                 a.vx = a.vx/ms
-            a.x = stena_x1 /scale + 5
-        elif a.x*scale > stena_x2:
+            a.x = wall_x1 / scale + 5
+        elif a.x*scale > wall_x2:
             if a.vx >= 0:
                 a.vx = -a.vx/ms
             else:
                 a.vx = a.vx/ms
-            a.x = stena_x2/scale - 5
-        elif a.y*scale < stena_y1:
+            a.x = wall_x2 / scale - 5
+        elif a.y*scale < wall_y1:
             if a.vy <= 0:
                 a.vy = -a.vy/ms
             else:
                 a.vy = a.vy/ms
-            a.y = stena_y1/scale + 5
-        elif a.y*scale > stena_y2:
+            a.y = wall_y1 / scale + 5
+        elif a.y*scale > wall_y2:
             if a.vy >= 0:
                 a.vy = -a.vy/ms
             else:
                 a.vy = a.vy/ms
-            a.y = stena_y2/scale - 5
+            a.y = wall_y2 / scale - 5
         else:
             a.vx = a.vx
             a.vy = a.vy
@@ -101,12 +99,12 @@ class Solver:
                 continue
             object.vx += dt * self.get_dvx_dt(object, object_n)
             object.vy += dt * self.get_dvy_dt(object, object_n)
-            self.ydar(object, object_n)
+            self.hit(object, object_n)
 
         self.euler(object)
 
     def euler(self, object):
-        self.stena(object)
+        self.wall(object)
         object.x = (object.x * scale + dt * object.vx)/scale
         object.y = (object.y * scale + dt * object.vy)/scale
 
@@ -117,6 +115,3 @@ class Solver:
         coords.append(self.objects[self.num].y)
 
         return coords
-
-
-
